@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Indian Foods</title>
+</head>
+<body>
+    <h1>Choose a State</h1>
+    <select id="state_select">
+        {% for state in states %}
+            <option value="{{ state }}">{{ state }}</option>
+        {% endfor %}
+    </select>
+    <button onclick="playSound()">Start</button>
+
+    <script>
+        function playSound() {
+            var selectedState = document.getElementById("state_select").value;
+            fetch("/play_sound/" + selectedState)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
